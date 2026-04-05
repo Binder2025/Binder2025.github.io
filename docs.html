@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title data-i18n="page.title.docs">文档 - 必达-Binder</title>
+        <link rel="stylesheet" href="css/style.css" />
+        <script>
+            (function () {
+                function getPref(key, fallback) {
+                    try {
+                        var v = localStorage.getItem(key);
+                        if (v !== null && v !== undefined && v !== "") return v;
+                    } catch (e) {}
+                    var c = document.cookie.match(
+                        new RegExp("(^| )" + key + "=([^;]+)"),
+                    );
+                    if (c) return decodeURIComponent(c[2]);
+                    return fallback;
+                }
+                function setPref(key, val) {
+                    try {
+                        localStorage.setItem(key, val);
+                    } catch (e) {}
+                    var date = new Date();
+                    date.setTime(date.getTime() + 365 * 24 * 60 * 60 * 1000);
+                    document.cookie =
+                        key +
+                        "=" +
+                        encodeURIComponent(val) +
+                        ";expires=" +
+                        date.toUTCString() +
+                        ";path=/;SameSite=Lax";
+                }
+                window.__setPref = setPref;
+                window.__getPref = getPref;
+
+                var t = getPref(
+                    "theme",
+                    window.matchMedia("(prefers-color-scheme: dark)").matches
+                        ? "dark"
+                        : "light",
+                );
+                document.documentElement.setAttribute("data-theme", t);
+                var l = getPref("lang", "zh");
+                document.documentElement.lang = l === "zh" ? "zh-CN" : "en";
+            })();
+        </script>
+    </head>
+    <body>
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-brand">
+                    <a href="index.html" class="nav-logo"
+                        ><img src="assets/images/logo.png" alt="必达-Binder"
+                    /></a>
+                    <span class="nav-site-name" data-i18n="nav.site.name">必达</span>
+                </div>
+                <button class="hamburger" aria-label="菜单">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+                <div class="nav-links">
+                    <a href="index.html" class="nav-link" data-i18n="nav.home"
+                        >首页</a
+                    >
+                    <a
+                        href="products.html"
+                        class="nav-link"
+                        data-i18n="nav.products"
+                        >产品</a
+                    >
+                    <a
+                        href="docs.html"
+                        class="nav-link active"
+                        data-i18n="nav.docs"
+                        >文档</a
+                    >
+                    <a
+                        href="contact.html"
+                        class="nav-link"
+                        data-i18n="nav.contact"
+                        >联系</a
+                    >
+                    <a href="about.html" class="nav-link" data-i18n="nav.about"
+                        >关于</a
+                    >
+                    <div class="nav-actions">
+                        <button
+                            id="theme-toggle"
+                            class="theme-toggle"
+                            aria-label="切换主题"
+                        >
+                            <svg
+                                class="icon-moon"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            >
+                                <path
+                                    d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+                                />
+                            </svg>
+                            <svg
+                                class="icon-sun"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            >
+                                <circle cx="12" cy="12" r="5" />
+                                <line x1="12" y1="1" x2="12" y2="3" />
+                                <line x1="12" y1="21" x2="12" y2="23" />
+                                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                                <line
+                                    x1="18.36"
+                                    y1="18.36"
+                                    x2="19.78"
+                                    y2="19.78"
+                                />
+                                <line x1="1" y1="12" x2="3" y2="12" />
+                                <line x1="21" y1="12" x2="23" y2="12" />
+                                <line
+                                    x1="4.22"
+                                    y1="19.78"
+                                    x2="5.64"
+                                    y2="18.36"
+                                />
+                                <line
+                                    x1="18.36"
+                                    y1="5.64"
+                                    x2="19.78"
+                                    y2="4.22"
+                                />
+                            </svg>
+                        </button>
+                        <div class="lang-switcher">
+                            <button class="lang-btn" data-lang="zh">
+                                中文
+                            </button>
+                            <button class="lang-btn" data-lang="en">EN</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <section
+            class="page-banner"
+            style="background-image: url(&quot;assets/images/bg.png&quot;)"
+        >
+            <div class="banner-overlay">
+                <img
+                    src="assets/images/light/docs.png"
+                    alt="文档"
+                    class="banner-icon"
+                    data-theme-img
+                    data-light="assets/images/light/docs.png"
+                    data-dark="assets/images/dark/docs.png"
+                />
+                <h1 data-i18n="banner.docs.title">文档</h1>
+                <p data-i18n="banner.docs.subtitle">
+                    从这里开始，查看详细的技术文档与指南。
+                </p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="feature-layout">
+                <img
+                    src="assets/images/rc_logo.png"
+                    alt="Rust Constructor 指南"
+                    class="feature-img"
+                />
+                <div class="feature-text">
+                    <h3 data-i18n="home.feature.docs.rc.title">
+                        Rust Constructor 指南
+                    </h3>
+                    <p data-i18n="home.feature.docs.rc.desc">
+                        学习如何使用Rust Constructor。
+                    </p>
+                    <a
+                        href="https://github.com/ChepleBob30/Rust-Constructor-Guide"
+                        class="feature-link"
+                        target="_blank"
+                        rel="noopener"
+                        data-i18n="home.feature.docs.rc.link"
+                        >查看 →</a
+                    >
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="feature-layout">
+                <img
+                    src="assets/images/wutong_logo.png"
+                    alt="梧桐 开发者文档"
+                    class="feature-img"
+                />
+                <div class="feature-text">
+                    <h3 data-i18n="home.feature.docs.wutong.title">
+                        梧桐 开发者文档
+                    </h3>
+                    <p data-i18n="home.feature.docs.wutong.desc">
+                        了解如何为梧桐作贡献。
+                    </p>
+                    <a
+                        href="https://github.com/GavZheng/wutong/tree/main/docs"
+                        class="feature-link"
+                        target="_blank"
+                        rel="noopener"
+                        data-i18n="home.feature.docs.wutong.link"
+                        >查看 →</a
+                    >
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p data-i18n="footer.copyright">
+                &copy; 2026 必达-Binder. 保留所有权利。
+            </p>
+        </footer>
+
+        <script src="js/script.js"></script>
+        <script src="js/i18n.js"></script>
+    </body>
+</html>
